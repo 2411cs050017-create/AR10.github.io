@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Single Page Login System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url('mru.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      width: 320px;
+      padding: 50px 35px 30px 35px;
+      position: relative;
+      text-align: center;
+    }
+    .logo {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      width: 100px;
+      border-radius: 6px;
+    }
+    h2 {
+      color: #333;
+      margin-top: 80px;
+      margin-bottom: 25px;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 15px;
+      background-color: #2575fc;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #1b5fd0;
+    }
+    .error, .message {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+    .error { color: red; }
+    .message { color: green; }
+    .links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .links a {
+      color: #2575fc;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.jpg" alt="Logo" class="logo" />
+
+    <div id="login-section">
+      <h2>Login</h2>
+      <input type="text" id="login-username" placeholder="Enter Email" required />
+      <input type="password" id="login-password" placeholder="Enter Password" required />
+      <button onclick="login()">Login</button>
+      <p id="login-error" class="error"></p>
+      <div class="links">
+        <a onclick="showSection('forgot-section')">Forgot Password?</a>
+        <a onclick="showSection('register-section')">Register as New User</a>
+      </div>
+    </div>
+
+    <div id="forgot-section" class="hidden">
+      <h2>Forgot Password</h2>
+      <p>Enter your registered email:</p>
+      <input type="email" id="forgot-email" placeholder="Enter Email" required />
+      <button onclick="resetPassword()">Submit</button>
+      <p id="forgot-message" class="message"></p>
+      <div class="links">
+        <a onclick="showSection('login-section')">Back to Login</a>
+      </div>
+    </div>
+
+    <div id="register-section" class="hidden">
+      <h2>Register</h2>
+      <input type="text" id="reg-name" placeholder="Full Name" required />
+      <input type="email" id="reg-email" placeholder="Email" required />
+      <input type="password" id="reg-password" placeholder="Password" required />
+      <button onclick="register()">Register</button>
+      <p id="register-message" class="message"></p>
+      <div class="links">
+        <a onclick="showSection('login-section')">Back to Login</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showSection(id) {
+      document.getElementById('login-section').classList.add('hidden');
+      document.getElementById('forgot-section').classList.add('hidden');
+      document.getElementById('register-section').classList.add('hidden');
+      document.getElementById(id).classList.remove('hidden');
+      clearMessages();
+    }
+
+    function clearMessages() {
+      document.getElementById('login-error').textContent = '';
+      document.getElementById('forgot-message').textContent = '';
+      document.getElementById('register-message').textContent = '';
+    }
+
+    function register() {
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const message = document.getElementById('register-message');
+
+      if (!name || !email || !password) {
+        message.style.color = 'red';
+        message.textContent = 'Please fill all fields.';
+        return;
+      }
+      // Get existing users or empty array
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      // Check if email is taken
+      if (users.find(u => u.email === email)) {
+        message.style.color = 'red';
+        message.textContent = 'Email already registered.';
+        return;
+      }
+      // Add user and save
+      users.push({ name, email, password });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      message.style.color = 'green';
+      message.textContent = 'Registration successful! Returning to login...';
+      setTimeout(() => {
+        document.getElementById('reg-name').value = '';
+        document.getElementById('reg-email').value = '';
+        document.getElementById('reg-password').value = '';
+        showSection('login-section');
+      }, 2000);
+    }
+
+    function login() {
+      const email = document.getElementById('login-username').value.trim();
+      const password = document.getElementById('login-password').value;
+      const error = document.getElementById('login-error');
+
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
+
+      if (user && user.password === password) {
+        error.style.color = 'green';
+        error.textContent = `Login successful! Welcome, ${user.name}.`;
+      } else {
+        error.style.color = 'red';
+        error.textContent = 'Invalid email or password!';
+      }
+    }
+
+    function resetPassword() {
+      const email = document.getElementById('forgot-email').value.trim();
+      const message = document.getElementById('forgot-message');
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.email === email);
+
+      if (!email) {
+        message.style.color = 'red';
+        message.textContent = 'Please enter your email.';
+      } else if (user) {
+        message.style.color = 'green';
+        message.textContent = `Password reset link sent to ${email} (simulated).`;
+      } else {
+        message.style.color = 'red';
+        message.textContent = 'Email not found.';
+      }
+    }
+  </script>
+</body>
+</html>
