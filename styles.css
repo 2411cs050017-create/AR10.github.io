@@ -1,0 +1,85 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #f4f6f8;
+  color: #333;
+}
+
+header.hero {
+  background: linear-gradient(to right, #0077b6, #00b4d8);
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+
+.cta-buttons .btn {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background: white;
+  color: #0077b6;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.btn.secondary {
+  background: #caf0f8;
+}
+
+section {
+  padding: 2rem;
+}
+
+.map-placeholder {
+  background: #d9d9d9;
+  height: 200px;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #555;
+}
+
+.role-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  flex: 1 1 200px;
+}
+
+.access-links a {
+  display: inline-block;
+  margin: 0.5rem;
+  color: #0077b6;
+  text-decoration: underline;
+}
+
+footer {
+  background: #0077b6;
+  color: white;
+  text-align: center;
+  padding: 1rem;
+}
+header.hero {
+  position: relative;
+  background: url('mru.jpg') center/cover no-repeat;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
+.logo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 80px;
+  height: auto;
+}
