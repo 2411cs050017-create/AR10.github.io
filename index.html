@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>College Bus Tracker</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="hero">
+  <img src="logo.jpg" alt="MRU Logo" class="logo" />
+    <h1>MRU TrackNgo </h1>
+    <p>Track your college bus in real time. Stay informed. Stay on time.</p>
+    <div class="cta-buttons">
+      <a href="/C:\Users\ananya chandra\OneDrive\Desktop\hardware project\a.html" class="a"><button class="btn">login</button>
+</a>
+    </div>
+  </header>
+<section class="map-preview">
+  <h2>Live Bus Map Preview</h2>
+  <label for="bus-id">Enter Bus ID:</label>
+  <input type="text" id="bus-id" name="bus-id" placeholder="e.g., BUS5" />
+  <div class="map-placeholder">[Map will appear here]</div>
+  <button class="btn" onclick="trackBus()">Track My Bus</button>
+</section>
+
+  <section class="roles">
+    <h2>Role-Based Access</h2>
+    <div class="role-cards">
+      <div class="card">
+        <h3>🎓 Student</h3>
+        <p>View live location, ETA, route, notifications, schedule.</p>
+      </div>
+      <div class="card">
+        <h3>👨‍🏫 Staff</h3>
+        <p>All student features + priority alerts.</p>
+      </div>
+      <div class="card">
+        <h3>🧑‍✈️ Driver</h3>
+        <p>Start/stop trip, update status, view route.</p>
+      </div>
+      <div class="card">
+        <h3>🛠️ Admin</h3>
+        <p>Manage users, buses, routes, documents.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="announcements">
+    <h2>📣 Announcements</h2>
+    <ul>
+      <li>Bus #5 delayed due to traffic</li>
+      <li>New route added for Engineering Block</li>
+      <li>Holiday schedule updated</li>
+    </ul>
+  </section>
+
+  <section class="quick-access">
+    <h2> Quick Access</h2>
+    <div class="access-links">
+      <a href="#">View Schedule</a>
+      <a href="#">Download Route Maps</a>
+      <a href="#">Upload Documents</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>📞 Need help? Contact support at support@collegebus.com</p>
+  </footer>
+</body>
+<script>
+  function trackBus() {
+    const busId = document.getElementById('bus-id').value.trim();
+    if (!busId) {
+      alert('Please enter a valid Bus ID to track.');
+      return;
+    }
+    // Replace this with actual map logic or API call
+    document.querySelector('.map-placeholder').innerText = `Tracking Bus: ${busId}... [Map loading]`;
+  }
+</script>
+</html>
